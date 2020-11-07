@@ -1,0 +1,10 @@
+{
+  "ignoreTestFiles": "*.js",
+  "testFiles": "**/*.{feature,features}",
+  "video": false,
+  "screenshotsFolder": "test-report/screenshots",
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "reporterOptions.json"
+  }
+}

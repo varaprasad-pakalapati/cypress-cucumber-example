@@ -1,0 +1,26 @@
+{
+  "name": "cypress-cucumber-test",
+  "version": "1.0.0",
+  "description": "Example of cypress with cucumber",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run --spec \"**/*.feature\"",
+    "test:all": "cypress run --spec \"**/*.features\"",
+    "merge:reports": "mochawesome-merge -f test-report/json-result/*.json -o test-report/merged-json/e2e-test-report.json",
+    "create:html:report": "marge test-report/merged-json/e2e-test-report.json -t E2E-Tests -f e2e-tests-report -o test-report/html --inline --charts",
+    "generate:reprot": " npx merge:reports && npm reate:html:report"
+  },
+  "dependencies": {
+    "cypress": "^4.10.0",
+    "cypress-cucumber-preprocessor": "^2.5.0",
+    "cypress-multi-reporters": "1.4.0",
+    "image-to-base64": "2.1.1",
+    "mocha": "6.1.4",
+    "mochawesome": "6.1.1",
+    "mochawesome-merge": "4.2.0",
+    "mochawesome-report-generator": "5.1.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  }
+}
