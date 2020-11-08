@@ -13,6 +13,7 @@
 
 const cucumber = require('cypress-cucumber-preprocessor').default;
 const fs = require('fs');
+const imageToBase64 = require('image-to-base64');
 
 module.exports = (on, config) => {
   on('file:preprocessor', cucumber())
@@ -24,6 +25,14 @@ module.exports = (on, config) => {
         resolve({ path: newPath })
       })
     })
+  })
+  on('task', {
+    converImgToBase64 (filename) {
+      if (fs.existsSync(filename)) {
+        return imageToBase64(filename);
+      }
+      return null
+    }
   })
 }
 

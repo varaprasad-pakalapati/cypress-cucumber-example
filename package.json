@@ -8,7 +8,7 @@
     "test:all": "cypress run --spec \"**/*.features\"",
     "merge:reports": "mochawesome-merge -f test-report/json-result/*.json -o test-report/merged-json/e2e-test-report.json",
     "create:html:report": "marge test-report/merged-json/e2e-test-report.json -t E2E-Tests -f e2e-tests-report -o test-report/html --inline --charts",
-    "generate:reprot": " npx merge:reports && npm reate:html:report"
+    "generate:reprot": " yarn run merge:reports && yarn run create:html:report"
   },
   "dependencies": {
     "cypress": "^4.10.0",

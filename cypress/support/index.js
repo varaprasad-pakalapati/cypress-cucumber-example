@@ -16,25 +16,48 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 import addContext from 'mochawesome/addContext';
-import fs from 'fs';
 
 const titleToFilename = (title) => title.replace(/[:\/]/g, '');
 const replaceSlash = (title) => title.replace(/\\/g, "/");
-const base64img = (filename) => imageToBase64(filename);
 
-function base64_encode(filename) {
-    var bitmap = fs.readFileSync(filename);
-    return new Buffer.from(bitmap).toString('base64');
-}
+// afterEach(() => {
+//     // const tempfile1 = "/Users/e1206932/Desktop/test.png";
+//     const imagedetails = "data:image/png;base64,";
+
+//     // cy.log("********************");
+//     // cy.log(Cypress.spec.name);
+//     // cy.log(Cypress.spec.relative);
+//     // cy.log(Cypress.spec.absolute);
+//     // cy.log(Cypress.runner.ctx.currentTest.title);
+//     // cy.log(Cypress.mocha.getRunner().suite.ctx.currentTest.title);
+//     // cy.log(Cypress.mocha.getRunner().suite.title);
+//     // const _onRunnableRun = Cypress.runner.runnable.parent..onRunnableRun
+//     // Cypress.runner.onRunnableRun = function (runnableRun, runnable, args) {
+//     // 	const r = runnable
+//     //   const test = r.ctx.currentTest.title
+//     //   cy.log(test);
+//     // }
+//     const screenshotpath = `test-report/screenshots/${replaceSlash(Cypress.spec.name)}/${Cypress.mocha.getRunner().suite.title} -- ${titleToFilename(Cypress.mocha.getRunner().suite.ctx.currentTest.title.replace("#", ''))} (failed).png`;
+//     // cy.log(screenshotpath);
+//     const filename = `${Cypress.spec.absolute}`.replace(`${replaceSlash(Cypress.spec.relative)}`, '') + screenshotpath;
+//     // console.log(filename);
+//     // cy.log(filename);
+
+//     cy.task('converImgToBase64', filename).then((textOrNull) => {
+//         cy.log("image base64 value " + textOrNull);
+//         if (textOrNull) {
+//             cy.log("Check image base64 valiesiton is correct or now");
+//             Cypress.env('imagebase64', imagedetails + textOrNull);
+//         }
+//     })
+// });
 
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
-        // const screenshotpath = `test-report/html/screenshots/${replaceSlash(Cypress.spec.name)}/${titleToFilename(runnable.parent.title)} -- ${titleToFilename(test.title.replace("#", ''))} (failed).png`;
-        // const filename = `${Cypress.spec.absolute}`.replace(`${replaceSlash(Cypress.spec.relative)}`, '') + screenshotpath;
-
-        const tempfile1 = "/Users/e1206932/Desktop/test.png";
-        // const tempfile2 = "\\Users\\e1206932\\Desktop\\test.png";
-        var imagebase64 = base64_encode(tempfile1);
-        addContext({ test }, imagebase64);
+        if (Cypress.env('imagebase64')) {
+            console.log(Cypress.env('imagebase64'));
+            console.log("Inside support/index.js")
+            addContext({ test }, Cypress.env('imagebase64'));
+        }
     }
-})
+});
